@@ -1,1 +1,57 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+dataset = pd.DataFrame({
+    "House_Size": [800,900,1000,1100,1200,1300,1400,1500,1600,1700],
+    "House_Price": [32,36,40,44,48,52,56,60,64,68]
+})
 
+print(dataset)
+X = dataset.iloc[:, :-1].values
+y = dataset.iloc[:, -1].values
+
+print(X)
+print(y)
+X_train, X_test, y_train, y_test = train_test_split(
+    X,
+    y,
+    test_size=0.2,
+    random_state=0
+)
+
+print("X_train")
+print(X_train)
+
+print("X_test")
+print(X_test)
+
+print("y_train")
+print(y_train)
+
+print("y_test")
+print(y_test)
+model = LinearRegression()
+
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+
+print("Actual Price :", y_test)
+print("Predicted Price :", y_pred)
+print("Intercept :", model.intercept_)
+print("Slope :", model.coef_)
+new_house = [[2200]]
+
+prediction = model.predict(new_house)
+
+print("Predicted House Price =", prediction)
+plt.scatter(X_train, y_train, color='red')
+
+plt.plot(X_train,
+         model.predict(X_train),
+         color='blue')
+
+plt.title("House Price Prediction Using Simple Linear Regression")
+plt.xlabel("House Size (sq ft)")
+plt.ylabel("House Price (Lakhs)")
+plt.show()
