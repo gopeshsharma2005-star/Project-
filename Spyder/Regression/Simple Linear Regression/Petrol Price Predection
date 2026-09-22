@@ -1,0 +1,44 @@
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from sklearn.impute import SimpleImputer
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+
+dataset = pd.read_csv(r"C:\Users\gopes\Downloads\Project DS\Petrol_Price_1_Year_Dataset.csv")
+Y = dataset.iloc[:, -1].values
+
+X = dataset.iloc[:, 1:2].values
+
+imputer = SimpleImputer(missing_values=np.nan, strategy="mean")
+
+imputer = imputer.fit(X)
+X = imputer.transform(X)
+
+X_train, X_test, y_train, y_test = train_test_split( X,Y,test_size=0.2,random_state=0
+)
+
+model = LinearRegression()
+
+model.fit(X_train, y_train)
+Y_pred = model.predict(X_test)
+
+
+Y_pred = model.predict(X_test)
+new_price = [[100]]
+
+prediction = model.predict(new_price)
+
+print("Predicted petrol Price =", prediction)
+
+
+plt.scatter(X_train, y_train, color='red')
+
+plt.plot(X_train,
+         model.predict(X_train),
+         color='blue')
+
+plt.title("Petrol Price Prediction")
+plt.xlabel("Crude OIL Price (USD)")
+plt.ylabel("Petrol Price (Rupess)")
+plt.show()
