@@ -1,0 +1,36 @@
+import pandas as pd
+from sklearn.tree import DecisionTreeRegressor
+
+# Load CSV
+dataset = pd.read_csv(
+    r"C:\Users\gopes\Downloads\Project DS\Petrol_Price_1_Year_Dataset.csv"
+)
+
+# Check your data
+print(dataset.head())
+print(dataset.columns)
+
+# Target = last column
+y = dataset.iloc[:, -1]
+
+# Independent variables = all columns except target
+X = dataset.iloc[:, :-1].copy()
+
+# Convert categorical columns into numerical/binary columns
+X = pd.get_dummies(X, dtype=int)
+
+# Display X
+print(X)
+
+# Create Decision Tree Regressor
+model = DecisionTreeRegressor(random_state=42)
+
+# Train model
+model.fit(X, y)
+
+# Get feature importance
+importance = model.feature_importances_
+
+# Display result
+for feature, score in zip(X.columns, importance):
+    print(feature, "=", round(score, 2))
