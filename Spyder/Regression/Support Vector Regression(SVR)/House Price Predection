@@ -1,0 +1,61 @@
+# Importing the libraries
+
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+
+# Importing the dataset
+
+dataset = pd.DataFrame({
+    "House_Size": [800,900,1000,1100,1200,1300,1400,1500,1600,1700],
+    "House_Price": [32,36,40,44,48,52,56,60,64,68]
+})
+
+print(dataset)
+X = dataset.iloc[:, :-1].values
+y = dataset.iloc[:, -1].values
+
+print(X)
+print(y)
+
+# Fitting SVR to the dataset
+
+from sklearn.svm import SVR
+
+regressor = SVR()
+
+# regressor = SVR(kernel="poly", degree=4, gamma="auto")
+# regressor = SVR(kernel="sigmoid")
+
+regressor.fit(X, y)
+
+# Predicting a new result
+
+y_pred = regressor.predict([[85]])
+
+print("Predicton House_Price:", y_pred)
+
+# Graph
+
+plt.scatter(
+    X,
+    y,
+    color="red",
+    label="Actual Data"
+)
+
+plt.plot(
+    X,
+    regressor.predict(X),
+    color="blue",
+    label="SVR Prediction"
+)
+
+plt.xlabel("House_Size")
+plt.ylabel("House_Price")
+
+plt.title("SVR House Price Prediction")
+
+plt.legend()
+
+plt.show()
