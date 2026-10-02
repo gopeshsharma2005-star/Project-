@@ -1,0 +1,31 @@
+import pandas as pd
+from sklearn.tree import DecisionTreeClassifier
+
+# Create simple dataset
+data = {
+    'Credit_Score': [550, 580, 620, 680, 720, 780],
+    'Income':       [20, 25, 30, 45, 50, 60],
+    'Age':          [22, 25, 28, 35, 40, 45],
+    'Loan':         ['No', 'No', 'No', 'Yes', 'Yes', 'Yes']
+}
+
+df = pd.DataFrame(data)
+
+# Independent variables
+X = df[['Credit_Score', 'Income', 'Age']]
+
+# Dependent variable
+y = df['Loan']
+
+# Create Decision Tree
+model = DecisionTreeClassifier(random_state=42)
+
+# Train model
+model.fit(X, y)
+
+# Get feature importance
+importance = model.feature_importances_
+
+# Display result
+for feature, score in zip(X.columns, importance):
+    print(feature, "=", round(score, 2))
