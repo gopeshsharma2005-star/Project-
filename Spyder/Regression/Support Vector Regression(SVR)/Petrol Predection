@@ -1,0 +1,62 @@
+# Importing the libraries
+
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+
+# Importing the dataset
+
+dataset = pd.read_csv(
+    r"C:\Users\gopes\Downloads\Project DS\Petrol_Price_1_Year_Dataset.csv"
+)
+
+# Remove missing values
+dataset = dataset.dropna()
+
+# X = Crude Oil Price
+X = dataset.iloc[:, 1:2].values
+
+# y = Petrol Price
+y = dataset.iloc[:, 2].values
+
+# Fitting SVR to the dataset
+
+from sklearn.svm import SVR
+
+regressor = SVR()
+
+# regressor = SVR(kernel="poly", degree=4, gamma="auto")
+# regressor = SVR(kernel="sigmoid")
+
+regressor.fit(X, y)
+
+# Predicting a new result
+
+y_pred = regressor.predict([[85]])
+
+print("Predicted Petrol Price:", y_pred)
+
+# Graph
+
+plt.scatter(
+    X,
+    y,
+    color="red",
+    label="Actual Data"
+)
+
+plt.plot(
+    X,
+    regressor.predict(X),
+    color="blue",
+    label="SVR Prediction"
+)
+
+plt.xlabel("Crude Oil Price")
+plt.ylabel("Petrol Price")
+
+plt.title("SVR Petrol Price Prediction")
+
+plt.legend()
+
+plt.show()
