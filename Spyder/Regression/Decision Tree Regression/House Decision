@@ -1,0 +1,40 @@
+import pandas as pd
+from sklearn.tree import DecisionTreeRegressor
+
+# Create simple dataset
+data = {
+    'House_Size': [5500, 5680, 6920, 6980, 9520, 8080],
+    'House_Price': [200000, 250000, 300000, 450000, 50000, 60000],
+    'House_Location': ['North', 'South', 'South', 'West', 'East', 'West'],
+    'House_Nearest Metro': ['No', 'No', 'No', 'Yes', 'Yes', 'Yes']
+}
+
+df = pd.DataFrame(data)
+
+# Convert categorical columns into binary columns
+df = pd.get_dummies(
+    df,
+    columns=['House_Location', 'House_Nearest Metro'],
+    dtype=int
+)
+
+print(df)
+
+# Independent variables
+X = df.drop('House_Price', axis=1)
+
+# Dependent variable
+y = df['House_Price']
+
+# Create Decision Tree Regressor
+model = DecisionTreeRegressor(random_state=42)
+
+# Train model
+model.fit(X, y)
+
+# Get feature importance
+importance = model.feature_importances_
+
+# Display result
+for feature, score in zip(X.columns, importance):
+    print(feature, "=", round(score, 2))
