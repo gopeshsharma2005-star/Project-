@@ -1,0 +1,10 @@
+cross-validation
+What is LOOCV?
+Leave-One-Out Cross-Validation (LOOCV) is a special type of cross-validation in which:
+•	One data record is selected for testing.
+•	All the remaining records are used for training.
+•	This process is repeated until every record has been used once as the test record.
+•	Finally, the performance scores from all iterations are averaged.
+
+K-Fold Cross-Validation
+K-Fold Cross-Validation is a model evaluation technique in which a dataset is divided into K equal or nearly equal parts (folds) to evaluate a machine learning model.
